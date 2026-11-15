@@ -25,7 +25,7 @@ MAIN_NAV = [
     ('gioi-thieu',             'Giới thiệu', 'gioi-thieu.html',  False),
     ('shop',                   'Sản phẩm',   'san-pham.html',    False),
     ('tin-tuc',                'Tin tức',    'tin-tuc.html',     False),
-    ('lien-he',                'Liên hê',    'lien-he.html',     False),
+    ('lien-he',                'Liên hệ',    'lien-he.html',     False),
     ('huong-dan',              'Hướng dẫn',  'huong-dan.html',   True),
 ]
 GUIDE_SUB = [
@@ -113,89 +113,25 @@ def header(prefix, active_href=None):
                e(label), caret, sub))
 
     return '''<header class="header" id="header">
-  <div class="header-wrapper">
-
-    <!-- top bar -->
-    <div class="header-top hide-for-sticky" id="top-bar">
-      <div class="container header-row">
-        <ul class="topbar-nav hide-for-medium">
-          <li><span class="topbar-text">{phone_icon} {phone}</span></li>
-          <li><a href="mailto:{email}">{mail_icon} {email}</a></li>
-        </ul>
-        <ul class="topbar-nav show-for-medium">
-          <li><span class="topbar-text">{phone_icon} {phone}</span></li>
-        </ul>
-        <ul class="topbar-nav hide-for-medium">
-          <li><a href="{prefix}huong-dan-mua-hang.html">Hướng dẫn mua hàng</a></li>
-          <li><button class="lang-toggle" type="button" aria-expanded="false">Languages {down}</button></li>
-        </ul>
+  <div class="header-bar">
+    <div class="container header-row">
+      <button class="burger" type="button" data-open-menu aria-label="Mở menu" aria-controls="mobile-menu" aria-expanded="false">{bars}</button>
+      <a class="logo" href="{prefix}index.html" rel="home" title="Xưởng Sản Xuất Thuyền Mỹ Nghệ Hoa Tay Việt">
+        <img src="{logo}" width="120" height="60" alt="Hoa Tay Việt - Xưởng Sản Xuất Thuyền Mỹ Nghệ">
+      </a>
+      <nav class="main-nav-wrap" aria-label="Menu chính">
+        <ul class="main-nav">{nav}</ul>
+      </nav>
+      <div class="header-actions">
+        <a class="search-toggle" href="{prefix}tim-kiem.html" aria-label="Tìm kiếm sản phẩm">{search_icon}</a>
+        <a class="btn btn-call" href="tel:{phone_raw}">{phone_icon}<span>{phone}</span></a>
       </div>
     </div>
-
-    <!-- main bar -->
-    <div class="header-main hide-for-sticky" id="masthead">
-      <div class="container header-row">
-        <div class="header-col show-for-medium">
-          <button class="burger" type="button" data-open-menu aria-label="Mở menu" aria-controls="mobile-menu" aria-expanded="false">{bars}</button>
-        </div>
-
-        <div class="header-col logo">
-          <a href="{prefix}index.html" rel="home" title="Xưởng Sản Xuất Thuyền Mỹ Nghệ Hoa Tay Việt">
-            <img src="{logo}" width="200" height="100" alt="Xưởng Sản Xuất Thuyền Mỹ Nghệ Hoa Tay Việt">
-          </a>
-        </div>
-
-        <div class="header-col header-search hide-for-medium">
-          {search}
-        </div>
-
-        <ul class="header-tools hide-for-medium">
-          <li class="account-item"><a class="account-link" href="{prefix}tai-khoan.html" aria-label="Tài khoản">{user}</a></li>
-          <li class="header-divider" aria-hidden="true"></li>
-          <li class="cart-item">
-            <a class="cart-link" href="{prefix}gio-hang.html" title="Giỏ hàng">
-              <span class="cart-title">Giỏ hàng&nbsp;/&nbsp;<span class="cart-price">0&nbsp;₫</span></span>
-              <span class="cart-glyph" data-icon-label="0">{basket}</span>
-            </a>
-          </li>
-        </ul>
-
-        <div class="header-col show-for-medium">
-          <a class="cart-toggle header-icon" href="{prefix}gio-hang.html" aria-label="Giỏ hàng">{basket}</a>
-        </div>
-      </div>
-    </div>
-
-    <!-- bottom bar -->
-    <div class="header-bottom hide-for-medium" id="wide-nav">
-      <div class="container header-row">
-        <div class="header-col nav-left">
-          <div class="mega-menu">
-            <button class="mega-menu-title" type="button" aria-expanded="false" aria-controls="mega-menu-list">
-              {bars} Danh mục sản phẩm
-            </button>
-            <ul class="mega-menu-list" id="mega-menu-list">{cats}</ul>
-          </div>
-        </div>
-
-        <nav class="header-col nav-center" aria-label="Menu chính">
-          <ul class="main-nav">{nav}</ul>
-        </nav>
-
-        <div class="header-col nav-right">
-          <a class="header-phone" href="tel:{phone_raw}">{phone_icon} {phone}</a>
-        </div>
-      </div>
-    </div>
-
   </div>
 </header>'''.format(
-        prefix=prefix, phone=PHONE, phone_raw=PHONE.replace(' ', ''), email=EMAIL,
-        phone_icon=icon('phone'), mail_icon=icon('mail'), down=icon('down'),
-        bars=icon('bars'), user=icon('user'), basket=icon('basket'),
-        logo=prefix + IMG_BASE + '2023/06/logo.jpg',
-        search=search_form(prefix),
-        cats=cat_items, nav=''.join(nav_items))
+        prefix=prefix, phone=PHONE, phone_raw=PHONE.replace(' ', ''),
+        phone_icon=icon('phone'), search_icon=icon('search'), bars=icon('bars'),
+        logo=prefix + IMG_BASE + '2023/06/logo.jpg', nav=''.join(nav_items))
 
 
 def offcanvas(prefix):
@@ -229,62 +165,31 @@ def offcanvas(prefix):
 
 
 def footer(prefix):
-    return '''<footer class="footer-wrapper">
-  <div class="footer-widgets">
-    <div class="row">
-
-      <div class="widget">
-        <h3 class="widget-title">Thông tin liên hệ</h3>
-        <div class="is-divider"></div>
-        <div class="textwidget">
-          <p><strong>CÔNG TY TNHH HOA TAY VIỆT</strong></p>
-          <p>{pin} <span>199 ấp 1B, Phước Thái, Long Thành, Đồng Nai</span></p>
-          <p>{phone_icon} <a href="tel:0908062685">0908 062 685</a></p>
-          <p>{phone_icon} <span>84 35234 4343 – Contact (Ms Tram)</span></p>
-          <p>{mail} <a href="mailto:hoatayviet.modelship@gmail.com">hoatayviet.modelship@gmail.com</a></p>
-          <p>{mail} <a href="mailto:lywoodenmodelboat@gmail.com">lywoodenmodelboat@gmail.com</a></p>
-        </div>
-      </div>
-
-      <div class="widget">
-        <h3 class="widget-title">Google Map</h3>
-        <div class="is-divider"></div>
-        <div class="textwidget">
-          <iframe class="footer-map" title="Bản đồ Hoa Tay Việt" loading="lazy"
-            referrerpolicy="no-referrer-when-downgrade" allowfullscreen
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3920.626500441101!2d107.03891671474814!3d10.686071692382871!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31751a77768c1d45%3A0xcb63f98a4ce9af9a!2zSzYwIOG6pHAgMSwgVMOibiBIaeG7h3AsIExvbmcgVGjDoG5oLCDEkOG7k25nIE5haSwgVmnhu4d0IE5hbQ!5e0!3m2!1svi!2sus!4v1669172546397!5m2!1svi!2sus"></iframe>
-        </div>
-      </div>
-
-      <div class="widget">
-        <h3 class="widget-title">Giới thiệu</h3>
-        <div class="is-divider"></div>
-        <div class="textwidget">
-          <p class="muted">Chào mừng quý khách đến với đại gia đình HOA TAY VIỆT.</p>
-          <p><span>Công ty chúng tôi chuyên xuất khẩu ngành hàng thủ công mỹ nghệ có bề dày kinh nghiệm trong ngành thủ công làm bằng tay</span></p>
-        </div>
-      </div>
-
+    cats = ''.join('<li><a href="%sdanh-muc/%s/index.html">%s</a></li>' % (prefix, sl, e(n))
+                   for sl, n in CATEGORIES)
+    return '''<footer class="footer">
+  <div class="container footer-grid">
+    <div class="footer-main">
+      <h2 class="footer-brand">Hoa Tay Việt</h2>
+      <p>Công ty TNHH Hoa Tay Việt<br>199 ấp 1B, Phước Thái, Long Thành, Đồng Nai</p>
+      <p><a href="tel:0908062685">0908 062 685</a> · <a href="tel:+84352344343">84 35234 4343</a> (Ms Tram)<br>
+         <a href="mailto:hoatayviet.modelship@gmail.com">hoatayviet.modelship@gmail.com</a><br>
+         <a href="mailto:lywoodenmodelboat@gmail.com">lywoodenmodelboat@gmail.com</a></p>
+    </div>
+    <div>
+      <h2 class="footer-title">Sản phẩm</h2>
+      <ul class="footer-list footer-cats">{cats}</ul>
+      <ul class="footer-links">
+        <li><a href="{prefix}gioi-thieu.html">Giới thiệu</a></li>
+        <li><a href="{prefix}huong-dan-mua-hang.html">Hướng dẫn mua hàng</a></li>
+        <li><a href="{prefix}lien-he.html">Liên hệ</a></li>
+      </ul>
     </div>
   </div>
-
-  <div class="footer-bottom">
-    <div class="container">Copyright 2026 © <strong>duongit</strong></div>
-  </div>
-
+  <div class="footer-bottom"><div class="container">© 2026 Hoa Tay Việt</div></div>
   <a class="back-to-top" href="#top" aria-label="Lên đầu trang">{up}</a>
-
-  <div class="quick-call">
-    <div class="quick-call-inner">
-      <p class="quick-call-text">HotLine: {phone}</p>
-      <span class="ph-circle" aria-hidden="true"></span>
-      <span class="ph-circle-fill" aria-hidden="true"></span>
-      <span class="ph-img-circle" aria-hidden="true">{phone_icon}</span>
-      <a href="tel:0908062685" aria-label="Gọi ngay {phone}"></a>
-    </div>
-  </div>
-</footer>'''.format(pin=icon('pin'), phone_icon=icon('phone'), mail=icon('mail'),
-                    up=icon('up'), phone=PHONE)
+  <a class="call-bar" href="tel:0908062685">{phone_icon}<span>Gọi ngay {phone}</span></a>
+</footer>'''.format(cats=cats, prefix=prefix, up=icon('up'), phone_icon=icon('phone'), phone=PHONE)
 
 
 def page(title, body_class, content, prefix, desc='', active=None):
@@ -299,10 +204,11 @@ def page(title, body_class, content, prefix, desc='', active=None):
 <link rel="apple-touch-icon" href="{prefix}{img}2023/06/cropped-logo-180x180.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Roboto+Condensed:wght@400;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Roboto+Condensed:wght@700&display=swap">
 <link rel="stylesheet" href="{prefix}assets/css/style.css">
 </head>
 <body class="{body_class}" id="top">
+<a class="skip-link" href="#main">Bỏ qua, đến nội dung</a>
 {header}
 <main id="main">
 {content}
@@ -331,95 +237,98 @@ def card(slug, name=None, image=None, hover=None, prefix=''):
         hover = next((g for g in gal if g != image), None)
 
     href = '%ssp/%s/index.html' % (prefix, slug)
-    back = ''
-    if hover:
-        back = ('<img class="img-back" src="%s" alt="" loading="lazy" decoding="async">'
-                % img_path(hover, prefix))
-    return '''<div class="col">
-  <article class="product-card">
-    <div class="product-media">
-      <a href="{href}" aria-label="{alt}">
-        <img src="{img}" alt="{alt}" loading="lazy" decoding="async">
-        {back}
-      </a>
-      <div class="product-tools">
-        <a class="cart-icon" href="{href}" aria-label="Xem {alt}"><strong>+</strong></a>
-      </div>
-    </div>
-    <div class="product-body">
-      <p class="product-name"><a href="{href}">{name}</a></p>
-    </div>
-  </article>
-</div>'''.format(href=href, img=img_path(image, prefix), alt=e(name), name=e(name), back=back)
+    meta = ' · '.join(x for x in [p.get('sku'), (p.get('size') or '').split(' / ')[0]] if x)
+    return '''<article class="product-card">
+  <a class="product-link" href="{href}">
+    <span class="product-media"><img src="{img}" alt="{alt}" loading="lazy" decoding="async"></span>
+    <span class="product-name">{name}</span>
+    {meta}
+  </a>
+</article>'''.format(href=href, img=img_path(image, prefix), alt=e(name), name=e(name),
+                     meta=('<span class="product-meta-line">%s</span>' % e(meta)) if meta else '')
 
 
 # --------------------------------------------------------------------------
 # home
 # --------------------------------------------------------------------------
-HERO_SLIDES = [
+HERO_PHOTOS = [
     ('2022/11/z3487042728597_daf745f2e9f46dcaf6295ec7df19df7d-768x579-1.jpg', 'Mô hình tàu Caledonian MacBrayne'),
     ('2022/11/z3150831024697_8d7e0c59a1b1af27a544a517bb227612.jpg',           'Mô hình du thuyền Hoa Tay Việt'),
     ('2022/11/366219_n-768x613-1.gif',                                        'Mô hình thuyền buồm thủ công'),
-    ('2022/11/VV3.gif',                                                       'Xưởng sản xuất thuyền mỹ nghệ'),
 ]
 
-def build_home():
-    slides, dots = [], []
-    for i, (src, alt) in enumerate(HERO_SLIDES):
-        slides.append(
-            '<div class="slide" role="group" aria-roledescription="slide" aria-label="%d / %d" aria-hidden="%s">'
-            '<div class="slide-bg" style="background-image:url(&quot;%s%s&quot;)" role="img" aria-label="%s"></div>'
-            '<div class="slide-overlay"></div></div>'
-            % (i + 1, len(HERO_SLIDES), 'false' if i == 0 else 'true',
-               IMG_BASE, src, e(alt)))
-        dots.append('<button type="button" role="tab" aria-selected="%s" aria-label="Ảnh %d"></button>'
-                    % ('true' if i == 0 else 'false', i + 1))
-
-    hero = '''<div class="gap"></div>
-<div class="row row-small hero-row">
-  <div class="col col-3"><!-- the category list sits here, rendered in the header --></div>
-  <div class="col col-9">
-    <div class="slider" data-slider data-autoplay="6000" tabindex="0" role="region" aria-roledescription="carousel" aria-label="Ảnh nổi bật">
-      <div class="slider-track">%s</div>
-      <button class="slider-arrow prev" type="button" aria-label="Ảnh trước">%s</button>
-      <button class="slider-arrow next" type="button" aria-label="Ảnh sau">%s</button>
-      <div class="slider-dots" role="tablist" aria-label="Chọn ảnh">%s</div>
+def section_block(title, href, cards, count=None, variant=''):
+    grid = 'grid-products' if not variant else 'grid-feature ' + variant
+    return '''<section class="catalog-section {tone}">
+  <div class="container">
+    <div class="section-head">
+      <h2 class="section-title"><a href="{href}">{title}</a></h2>
+      <a class="section-more" href="{href}">Xem tất cả{count}</a>
     </div>
+    <div class="{grid}">{cards}</div>
   </div>
-</div>''' % (''.join(slides), icon('left'), icon('right'), ''.join(dots))
+</section>'''.format(href=href, title=e(title), cards=cards, grid=grid,
+                      tone='tone-dark' if 'dark' in variant else ('tone-tint' if 'tint' in variant else ''),
+                      count=(' (%d)' % count) if count else '')
+
+def build_home():
+    src, alt = HERO_PHOTOS[0]
+    photo = '<img src="%s%s" alt="%s" width="768" height="579">' % (IMG_BASE, src, e(alt))
+
+    counts = {sl: sum(1 for p in PRODUCTS if p['categorySlug'] == sl) for sl, _ in CATEGORIES}
+    cat_row = ''.join('<li><a href="danh-muc/%s/index.html">%s<span>%d</span></a></li>'
+                      % (sl, e(n), counts[sl]) for sl, n in CATEGORIES)
+
+    hero = '''<section class="hero">
+  <div class="container hero-grid">
+    <div class="hero-copy">
+      <h1 class="hero-title">Mô hình tàu thuyền <em>làm thủ công</em></h1>
+      <p class="hero-deck">Xưởng Hoa Tay Việt chế tác tàu du lịch, du thuyền, thuyền buồm và nội thất gỗ, từng chi tiết làm bằng tay.</p>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="san-pham.html">Xem sản phẩm</a>
+        <a class="btn btn-outline" href="tel:0908062685">{phone_icon}<span>Gọi {phone}</span></a>
+      </div>
+    </div>
+    <figure class="hero-media">{photo}<figcaption>{caption}</figcaption></figure>
+  </div>
+</section>
+<nav class="category-row" aria-label="Danh mục sản phẩm">
+  <div class="container"><ul>{cat_row}</ul></div>
+</nav>'''.format(photo=photo, caption=e(alt), cat_row=cat_row, phone=PHONE, phone_icon=icon('phone'))
 
     blocks = [hero]
-    for sec in SECTIONS:
+    for idx, sec in enumerate(SECTIONS):
         title = sec['title'] or ''
-        # map the section heading to its category page where one exists
         cat_slug = next((s for s, n in CATEGORIES if n == title), None)
         title_href = 'danh-muc/%s/index.html' % cat_slug if cat_slug else 'san-pham.html'
-
-        links = []
-        for rl in sec['rightLinks']:
-            h = rl['href']
-            m = re.search(r'/danh-muc/([^/]+)/', h)
-            links.append('<a href="%s">%s</a>' %
-                         ('danh-muc/%s/index.html' % m.group(1) if m else 'san-pham.html',
-                          e(rl['text'])))
-
         cards = []
         for pr in sec['products']:
             slug = (pr['url'] or '').rstrip('/').rsplit('/', 1)[-1]
             cards.append(card(slug, pr['name'], pr['image'], pr['hoverImage']))
+        # layout rhythm: feature-left, tint row, dark feature-right, ...
+        variant, keep = [('feature', 5), ('tint', 4), ('feature flip dark', 5),
+                         ('tint', 2), ('feature flip', 5), ('tint', 4)][idx % 6]
+        tone = ''
+        if idx % 6 in (1, 3, 5):
+            variant, tone = '', 'tint'
+        sect = section_block(title, title_href, ''.join(cards[:keep]),
+                             counts.get(cat_slug) if cat_slug else None, variant)
+        if tone:
+            sect = sect.replace('class="catalog-section "', 'class="catalog-section tone-tint"')
+        blocks.append(sect)
 
-        blocks.append('''<section class="row row-small">
-  <div class="col">
-    <div class="section-head">
-      <h2 class="section-title"><a href="{th}">{title}</a></h2>
-      <div class="section-links">{links}</div>
+    blocks.append('''<section class="contact-band">
+  <div class="container contact-grid">
+    <div>
+      <h2>Chọn mẫu, gọi xưởng để nhận báo giá</h2>
+      <p>Giá từng mô hình tuỳ kích thước và yêu cầu. Xưởng trả lời trong ngày.</p>
+    </div>
+    <div class="contact-actions">
+      <a class="contact-phone" href="tel:0908062685">{phone}</a>
+      <a class="contact-mail" href="mailto:{email}">{email}</a>
     </div>
   </div>
-  <div class="col">
-    <div class="row row-small grid-products">{cards}</div>
-  </div>
-</section>'''.format(th=title_href, title=e(title),
-                     links=' – '.join(links), cards=''.join(cards)))
+</section>'''.format(phone=PHONE, email=EMAIL))
 
     return page('Trang Chủ - Xưởng Sản Xuất Thuyền Mỹ Nghệ Hoa Tay Việt',
                 'is-home', '\n'.join(blocks), '',
@@ -442,19 +351,13 @@ def build_category(slug, name):
       <a href="{p}index.html">Trang chủ</a><span>/</span>
       <a href="{p}san-pham.html">Sản phẩm</a><span>/</span>{name}
     </nav>
+    <div class="section-head">
+      <h1 class="section-title">{name}</h1>
+      <span class="section-more">{count} sản phẩm</span>
+    </div>
+    <div class="grid-products">{cards}</div>
+    {body}
   </div>
-  <section class="row row-small">
-    <div class="col">
-      <div class="section-head">
-        <h1 class="section-title">{name}</h1>
-        <div class="section-links">{count} sản phẩm</div>
-      </div>
-    </div>
-    <div class="col">
-      <div class="row row-small grid-products">{cards}</div>
-      {body}
-    </div>
-  </section>
 </div>'''.format(p=prefix, name=e(name), count=len(items), cards=cards, body=body)
 
     return page('%s - Hoa Tay Việt' % name, 'is-category', content, prefix,
@@ -483,8 +386,8 @@ def build_product(p):
                         for u in p['descImages'])
     desc_block = ''
     if body_txt or desc_imgs:
-        desc_block = ('<div class="product-desc"><h2 class="section-title" style="display:inline-block">Mô tả</h2>'
-                      '<div style="margin-top:16px">%s%s</div></div>' % (body_txt, desc_imgs))
+        desc_block = ('<div class="product-desc"><h2 class="section-title">Mô tả</h2>'
+                      '<div>%s%s</div></div>' % (body_txt, desc_imgs))
 
     cat_slug = p['categorySlug']
     cat_name = CAT_NAME.get(cat_slug, p['category'] or '')
@@ -492,11 +395,11 @@ def build_product(p):
     related = [q for q in PRODUCTS if q['categorySlug'] == cat_slug and q['slug'] != p['slug']][:4]
     rel_html = ''
     if related:
-        rel_html = '''<section class="row row-small" style="margin-top:30px">
-  <div class="col">
+        rel_html = '''<section class="catalog-section">
+  <div class="container">
     <div class="section-head"><h2 class="section-title">Sản phẩm tương tự</h2></div>
+    <div class="grid-products">%s</div>
   </div>
-  <div class="col"><div class="row row-small grid-products">%s</div></div>
 </section>''' % ''.join(card(q['slug'], prefix=prefix) for q in related)
 
     content = '''<div class="page-wrap">
@@ -514,12 +417,8 @@ def build_product(p):
 
       <div class="info-col">
         <h1>{name}</h1>
-        <div class="is-divider"></div>
         <dl class="spec-list">{specs}</dl>
-        <a class="btn-buy" href="tel:0908062685">
-          <strong>Mua ngay</strong>
-          <span>Gọi điện xác nhận và giao hàng tận nơi</span>
-        </a>
+        <a class="btn btn-cta btn-buy" href="tel:0908062685">{phone_icon}<span>Gọi báo giá 0908 062 685</span></a>
         <p class="product-meta">Danh mục: <a href="{p}danh-muc/{cslug}/index.html">{cname}</a></p>
         {desc}
       </div>
@@ -528,7 +427,7 @@ def build_product(p):
   {rel}
 </div>'''.format(p=prefix, cslug=cat_slug, cname=e(cat_name), name=e(p['name']),
                  main=img_path(main, prefix), thumbs=thumbs, specs=spec_html,
-                 desc=desc_block, rel=rel_html)
+                 desc=desc_block, rel=rel_html, phone_icon=icon('phone'))
 
     return page('%s - Hoa Tay Việt' % p['name'], 'is-product', content, prefix,
                 desc='%s — %s. %s' % (p['name'], cat_name, p['size'] or ''),
@@ -542,16 +441,8 @@ def build_all_products():
         items = [p for p in PRODUCTS if p['categorySlug'] == slug]
         if not items:
             continue
-        blocks.append('''<section class="row row-small">
-  <div class="col">
-    <div class="section-head">
-      <h2 class="section-title"><a href="danh-muc/{s}/index.html">{n}</a></h2>
-      <div class="section-links"><a href="danh-muc/{s}/index.html">Xem tất cả ({c})</a></div>
-    </div>
-  </div>
-  <div class="col"><div class="row row-small grid-products">{cards}</div></div>
-</section>'''.format(s=slug, n=e(name), c=len(items),
-                     cards=''.join(card(p['slug']) for p in items)))
+        blocks.append(section_block(name, 'danh-muc/%s/index.html' % slug,
+                                    ''.join(card(p['slug']) for p in items), len(items)))
 
     content = ('<div class="page-wrap"><div class="container"><nav class="breadcrumb">'
                '<a href="index.html">Trang chủ</a><span>/</span>Sản phẩm</nav></div>'
@@ -565,12 +456,16 @@ def build_search():
     content = '''<div class="page-wrap"><div class="container">
   <nav class="breadcrumb"><a href="index.html">Trang chủ</a><span>/</span>Tìm kiếm</nav>
   <h1 id="search-heading">Kết quả tìm kiếm</h1>
-  <div class="is-divider" style="margin-left:0"></div>
-</div>
-<section class="row row-small">
-  <div class="col"><div class="row row-small grid-products" id="search-results"></div>
-  <p class="empty-note" id="search-empty" hidden>Không tìm thấy sản phẩm phù hợp.</p></div>
-</section></div>
+  </div>
+<div class="container">
+  <form class="searchform" role="search" action="tim-kiem.html" method="get">
+    <label class="sr-only" for="q">Tìm kiếm sản phẩm</label>
+    <input class="search-field" type="search" name="s" id="q" placeholder="Tên hoặc mã sản phẩm" autocomplete="off">
+    <button class="btn btn-primary" type="submit">Tìm</button>
+  </form>
+  <div class="grid-products" id="search-results"></div>
+  <p class="empty-note" id="search-empty" hidden>Không tìm thấy sản phẩm phù hợp.</p>
+</div></div>
 <script>
 (function () {
   var q = new URLSearchParams(location.search);
@@ -594,11 +489,9 @@ def build_search():
     if (!out.length) { document.getElementById('search-empty').hidden = false; return; }
     box.innerHTML = out.map(function (p) {
       var href = 'sp/' + p.slug + '/index.html';
-      return '<div class="col"><article class="product-card"><div class="product-media">'
-        + '<a href="' + href + '"><img src="' + p.thumb + '" alt="' + p.name + '" loading="lazy"></a>'
-        + '<div class="product-tools"><a class="cart-icon" href="' + href + '"><strong>+</strong></a></div>'
-        + '</div><div class="product-body"><p class="product-name"><a href="' + href + '">'
-        + p.name + '</a></p></div></article></div>';
+      return '<article class="product-card"><a class="product-link" href="' + href + '">'
+        + '<span class="product-media"><img src="' + p.thumb + '" alt="' + p.name + '" loading="lazy"></span>'
+        + '<span class="product-name">' + p.name + '</span></a></article>';
     }).join('');
   });
 })();
@@ -610,7 +503,6 @@ def build_stub(title, heading, body, filename, active=None):
     content = '''<div class="page-wrap"><div class="container">
   <nav class="breadcrumb"><a href="index.html">Trang chủ</a><span>/</span>{h}</nav>
   <h1>{h}</h1>
-  <div class="is-divider" style="margin-left:0"></div>
   {b}
 </div></div>'''.format(h=e(heading), b=body)
     return page(title, 'is-page', content, '', active=active)
@@ -646,7 +538,7 @@ với bề dày kinh nghiệm trong ngành thủ công làm bằng tay.</p>
 
     for title, heading, body, fn in [
         ('Giới thiệu - Hoa Tay Việt',        'Giới thiệu',          intro,   'gioi-thieu.html'),
-        ('Liên hệ - Hoa Tay Việt',           'Liên hê',             contact, 'lien-he.html'),
+        ('Liên hệ - Hoa Tay Việt',           'Liên hệ',             contact, 'lien-he.html'),
         ('Tin tức - Hoa Tay Việt',           'Tin tức',             todo,    'tin-tuc.html'),
         ('Hướng dẫn - Hoa Tay Việt',         'Hướng dẫn',           todo,    'huong-dan.html'),
         ('Hướng dẫn sử dụng - Hoa Tay Việt', 'Hướng Dẫn Sử Dụng',   todo,    'huong-dan-su-dung.html'),
