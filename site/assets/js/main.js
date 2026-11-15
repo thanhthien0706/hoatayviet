@@ -283,11 +283,27 @@
       var cField = form.querySelector('.search-cats');
       var q   = qField ? qField.value.trim() : '';
       var cat = cField ? cField.value : '';
-      var base = form.getAttribute('data-base') || '';
-      var url = base + 'tim-kiem.html?s=' + encodeURIComponent(q);
+      // the form's action is the search page of the current language
+      var url = (form.getAttribute('action') || 'tim-kiem.html') + '?s=' + encodeURIComponent(q);
       if (cat) url += '&cat=' + encodeURIComponent(cat);
       window.location.href = url;
     });
+  });
+
+  /* ---------------------------------------------------------------------
+     7b. Language switcher — the dropdown only opens / closes; every entry is
+         a plain link to the same page in the other language.
+     --------------------------------------------------------------------- */
+  each(document.querySelectorAll('.lang-switch'), function (box) {
+    var btn = box.querySelector('.lang-toggle');
+    if (!btn) return;
+    function set(open) {
+      box.classList.toggle('is-open', open);
+      btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    }
+    btn.addEventListener('click', function (e) { e.stopPropagation(); set(!box.classList.contains('is-open')); });
+    document.addEventListener('click', function (e) { if (!box.contains(e.target)) set(false); });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') set(false); });
   });
 
   /* ---------------------------------------------------------------------

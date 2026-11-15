@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 """Generate the static clone (home, category pages, product pages, search)."""
 import os, re, json, html, shutil, sys, urllib.parse
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import lang_map
 sys.stdout.reconfigure(encoding='utf-8')
 
 ROOT = 'site'
@@ -135,8 +137,8 @@ def header(prefix, active_href=None):
           <li class="lang-switch">
             <button class="lang-toggle" type="button" aria-expanded="false" aria-haspopup="true" aria-controls="lang-menu">Languages {down}</button>
             <ul class="lang-menu" id="lang-menu">
-              <li><button type="button" data-lang="vi">Tiếng Việt</button></li>
-              <li><button type="button" data-lang="en">English</button></li>
+              <li><a href="@@LANG:vi@@" hreflang="vi" lang="vi" data-lang="vi">Tiếng Việt</a></li>
+              <li><a href="@@LANG:en@@" hreflang="en" lang="en" data-lang="en">English</a></li>
             </ul>
           </li>
         </ul>
@@ -228,8 +230,8 @@ def offcanvas(prefix):
         '<button class="toggle-sub" type="button" aria-expanded="false" aria-label="Mở mục con">%s</button>'
         '</a><ul class="sub">%s</ul></li>' % (prefix, icon('down'), gsub))
     items.append('<li><a href="%stai-khoan.html">Đăng nhập</a></li>' % prefix)
-    items.append('<li class="offcanvas-lang"><button type="button" data-lang="vi">Tiếng Việt</button>'
-                 '<button type="button" data-lang="en">English</button></li>')
+    items.append('<li class="offcanvas-lang"><a href="@@LANG:vi@@" hreflang="vi" lang="vi" data-lang="vi">Tiếng Việt</a>'
+                 '<a href="@@LANG:en@@" hreflang="en" lang="en" data-lang="en">English</a></li>')
 
     return '''<div class="offcanvas-backdrop" hidden-aria></div>
 <aside class="offcanvas" id="mobile-menu" aria-hidden="true" aria-label="Menu">
@@ -315,6 +317,8 @@ def page(title, body_class, content, prefix, desc='', active=None):
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Roboto+Condensed:wght@400;700&display=swap">
 <link rel="stylesheet" href="{prefix}assets/css/style.css">
+<link rel="alternate" hreflang="vi" href="@@LANG:vi@@">
+<link rel="alternate" hreflang="en" href="@@LANG:en@@">
 </head>
 <body class="{body_class}" id="top">
 {header}
@@ -323,7 +327,6 @@ def page(title, body_class, content, prefix, desc='', active=None):
 </main>
 {footer}
 {offcanvas}
-<script src="{prefix}assets/js/i18n.js"></script>
 <script src="{prefix}assets/js/main.js"></script>
 <script src="{prefix}assets/js/cart.js"></script>
 </body>
@@ -771,6 +774,11 @@ def build_checkout():
 
 # --------------------------------------------------------------------------
 def write(path, text):
+    if path.endswith('.html'):
+        # language-switcher targets: this page and its English twin
+        text = (text.replace('lang="vi" data-lang="vi">', 'lang="vi" data-lang="vi" aria-current="true">')
+                    .replace('@@LANG:vi@@', lang_map.rel(path, path))
+                    .replace('@@LANG:en@@', lang_map.rel(lang_map.counterpart(path, 'en'), path)))
     full = os.path.join(ROOT, path)
     os.makedirs(os.path.dirname(full), exist_ok=True)
     open(full, 'w', encoding='utf-8').write(text)
@@ -816,6 +824,9 @@ với bề dày kinh nghiệm trong ngành thủ công làm bằng tay.</p>
              'category': p['category'] or '', 'categorySlug': p['categorySlug'] or '',
              'thumb': img_path(p['thumb'])} for p in PRODUCTS]
     write('assets/data/products.json', json.dumps(slim, ensure_ascii=False, indent=1))
+
+    import build_en
+    build_en.main()
 
     print('pages written:', n)
     print('products     :', len(PRODUCTS))

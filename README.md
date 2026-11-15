@@ -24,9 +24,11 @@ site/                       the deliverable
   danh-muc/<slug>/          7 category listings
   sp/<slug>/                32 product pages
   gioi-thieu.html · lien-he.html · huong-dan*.html · gio-hang.html · tai-khoan.html
+  home.html · cart.html · about.html · …   English twin of every page above
+  category/<slug>/ · product/<slug>/       English twins of danh-muc/ and sp/
   assets/
     css/style.css           ~980 lines, tokens first, then components
-    js/main.js              sticky header, slider, menus, search, gallery
+    js/main.js              sticky header, slider, menus, search, gallery, language menu
     img/                    217 images, mirrored from the original CDN
     data/products.json      catalogue used by the search page
 
@@ -36,7 +38,10 @@ scripts/                    reproducible pipeline
   crawl_products.py         32 product pages from the Wayback Machine
   parse_products.py         product pages -> products.json
   download_product_images.py
-  build_site.py             renders every page
+  build_site.py             renders every Vietnamese page, then calls build_en.py
+  build_en.py               derives the English twin of each page (en_dict.json)
+  lang_map.py               Vietnamese <-> English URL map (gio-hang.html -> cart.html)
+  en_dict.json              Vietnamese -> English strings; add missing ones here
   check_site.py             link / asset integrity check
   cssgrep.py                pulls rules out of the original 441KB stylesheet
 

@@ -5,6 +5,32 @@
 
   var CART_KEY = 'hty-cart', ORDER_KEY = 'hty-orders';
 
+  // Pages come in two languages (vi / en); the cart itself is shared.
+  var EN = document.documentElement.lang === 'en';
+  var T = EN ? {
+    contact: 'Contact us', dec: 'Decrease', inc: 'Increase', qty: 'Quantity', remove: 'Remove',
+    removeItem: function (n) { return 'Remove ' + n + ' from cart'; },
+    errName: 'Please enter your full name.', errPhone: 'Invalid phone number.',
+    errEmail: 'Invalid email address.', errAddress: 'Please enter your delivery address.',
+    payQr: 'Please scan the QR code below to pay. We will confirm your order as soon as payment is received.',
+    payCod: 'You will pay in cash on delivery. Our staff will call you to confirm the order.',
+    product: 'product/', locale: 'en-US'
+  } : {
+    contact: 'Liên hệ', dec: 'Giảm', inc: 'Tăng', qty: 'Số lượng', remove: 'Xóa',
+    removeItem: function (n) { return 'Xóa ' + n + ' khỏi giỏ hàng'; },
+    errName: T.errName, errPhone: T.errPhone,
+    errEmail: T.errEmail, errAddress: T.errAddress,
+    payQr: 'Vui lòng quét mã QR bên dưới để thanh toán. Chúng tôi sẽ xác nhận đơn ngay khi nhận được tiền.',
+    payCod: 'Bạn sẽ thanh toán bằng tiền mặt khi nhận hàng. Nhân viên sẽ liên hệ xác nhận đơn qua điện thoại.',
+    product: 'sp/', locale: 'vi-VN'
+  };
+  // English names / URLs of products (assets/js/catalog.js, English pages only)
+  var CATALOG = (EN && window.HTY_CATALOG) || {};
+  function itemName(i) { return CATALOG[i.slug] ? CATALOG[i.slug].name : i.name; }
+  function itemUrl(i) {
+    return T.product + (CATALOG[i.slug] ? CATALOG[i.slug].slug : i.slug) + '/index.html';
+  }
+
   function each(list, fn) { Array.prototype.forEach.call(list, fn); }
   function $(sel, root) { return (root || document).querySelector(sel); }
 
@@ -17,7 +43,7 @@
   var cart = read(CART_KEY);
   function save() { write(CART_KEY, cart); updateHeader(); }
 
-  function fmt(n) { return n.toLocaleString('vi-VN') + ' ₫'; }
+  function fmt(n) { return n.toLocaleString(T.locale) + ' ₫'; }
   function count() { return cart.reduce(function (s, i) { return s + i.qty; }, 0); }
   function totals() {
     var sum = 0, contact = false;
@@ -97,7 +123,11 @@
   });
 
   /* ---- cart page ----------------------------------------------------- */
-  function priceLabel(i) { return typeof i.price === 'number' ? fmt(i.price) : (i.priceText || 'Liên hệ'); }
+  // the price text is stored in the language of the page it was added from
+  function priceText(i) {
+    return !i.priceText || i.priceText === 'Liên hệ' || i.priceText === 'Contact us' ? T.contact : i.priceText;
+  }
+  function priceLabel(i) { return typeof i.price === 'number' ? fmt(i.price) : priceText(i); }
 
   (function cartPage() {
     var list = $('#cart-items');
@@ -110,12 +140,12 @@
       list.textContent = '';
       cart.forEach(function (i, idx) {
         var row = el('div', 'cart-row');
-        var a = el('a', 'cart-thumb'); a.href = 'sp/' + i.slug + '/index.html';
-        var img = el('img'); img.src = i.img; img.alt = i.name; a.appendChild(img);
+        var a = el('a', 'cart-thumb'); a.href = itemUrl(i);
+        var img = el('img'); img.src = i.img; img.alt = itemName(i); a.appendChild(img);
         row.appendChild(a);
 
         var info = el('div', 'cart-info');
-        var nm = el('a', 'cart-name', i.name); nm.href = a.href;
+        var nm = el('a', 'cart-name', itemName(i)); nm.href = a.href;
         info.appendChild(nm);
         info.appendChild(el('div', 'cart-unit', priceLabel(i)));
         row.appendChild(info);
@@ -123,9 +153,9 @@
         var q = el('div', 'qty-box');
         var minus = el('button', null, '−'), plus = el('button', null, '+'), inp = el('input');
         minus.type = plus.type = 'button';
-        minus.setAttribute('aria-label', 'Giảm'); plus.setAttribute('aria-label', 'Tăng');
+        minus.setAttribute('aria-label', T.dec); plus.setAttribute('aria-label', T.inc);
         inp.type = 'number'; inp.min = 1; inp.max = 99; inp.value = i.qty;
-        inp.setAttribute('aria-label', 'Số lượng');
+        inp.setAttribute('aria-label', T.qty);
         function set(v) { i.qty = clampQty(v); save(); render(); }
         minus.addEventListener('click', function () { set(i.qty - 1); });
         plus.addEventListener('click', function () { set(i.qty + 1); });
@@ -134,8 +164,8 @@
         row.appendChild(q);
 
         var rm = el('button', 'cart-remove'); rm.type = 'button';
-        rm.setAttribute('aria-label', 'Xóa ' + i.name + ' khỏi giỏ hàng');
-        rm.title = 'Xóa';
+        rm.setAttribute('aria-label', T.removeItem(itemName(i)));
+        rm.title = T.remove;
         rm.innerHTML = '<svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">' +
           '<path d="M6 19a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg>';
         rm.addEventListener('click', function () { cart.splice(idx, 1); save(); render(); });
@@ -163,8 +193,8 @@
       var lines = $('#order-lines'); lines.textContent = '';
       cart.forEach(function (i) {
         var li = el('li');
-        li.appendChild(el('span', null, i.name + ' × ' + i.qty));
-        li.appendChild(el('span', null, typeof i.price === 'number' ? fmt(i.price * i.qty) : (i.priceText || 'Liên hệ')));
+        li.appendChild(el('span', null, itemName(i) + ' × ' + i.qty));
+        li.appendChild(el('span', null, typeof i.price === 'number' ? fmt(i.price * i.qty) : priceText(i)));
         lines.appendChild(li);
       });
       var t = totals();
@@ -193,12 +223,12 @@
         if (!good && !first) first = f[name];
         ok = ok && good;
       }
-      check('name', f.name.value.trim().length < 2 ? 'Vui lòng nhập họ và tên.' : '');
+      check('name', f.name.value.trim().length < 2 ? T.errName : '');
       var phone = f.phone.value.replace(/[\s.\-]/g, '');
-      check('phone', /^(0|\+84)\d{9,10}$/.test(phone) ? '' : 'Số điện thoại không hợp lệ.');
+      check('phone', /^(0|\+84)\d{9,10}$/.test(phone) ? '' : T.errPhone);
       var mail = f.email.value.trim();
-      check('email', !mail || /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(mail) ? '' : 'Email không hợp lệ.');
-      check('address', f.address.value.trim().length < 5 ? 'Vui lòng nhập địa chỉ nhận hàng.' : '');
+      check('email', !mail || /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(mail) ? '' : T.errEmail);
+      check('address', f.address.value.trim().length < 5 ? T.errAddress : '');
       if (first) first.focus();
       return ok;
     }
@@ -222,9 +252,7 @@
       cart = []; save();
       form.hidden = true;
       $('#done-code').textContent = code;
-      var msg = method === 'qr'
-        ? 'Vui lòng quét mã QR bên dưới để thanh toán. Chúng tôi sẽ xác nhận đơn ngay khi nhận được tiền.'
-        : 'Bạn sẽ thanh toán bằng tiền mặt khi nhận hàng. Nhân viên sẽ liên hệ xác nhận đơn qua điện thoại.';
+      var msg = method === 'qr' ? T.payQr : T.payCod;
       $('#done-msg').textContent = msg;
       $('#done-qr').hidden = method !== 'qr';
       $('#done-transfer').textContent = code;

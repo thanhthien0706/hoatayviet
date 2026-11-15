@@ -1066,19 +1066,19 @@ body.no-scroll { overflow: hidden; }
 .lang-switch.is-open > .lang-menu { opacity: 1; visibility: visible; }
 .lang-menu li { margin: 0; }
 .lang-menu li::before { display: none; }
-.lang-menu button {
+.lang-menu a {
   display: block; width: 100%; padding: 7px 20px;
-  background: none; border: 0; text-align: left; cursor: pointer;
+  text-align: left; text-decoration: none;
   font-size: 14px; color: var(--c-muted);
 }
-.lang-menu button:hover { color: var(--c-primary); }
-.lang-menu button[aria-current="true"] { color: var(--c-primary); font-weight: 700; }
+.lang-menu a:hover { color: var(--c-primary); }
+.lang-menu a[aria-current="true"] { color: var(--c-primary); font-weight: 700; }
 .offcanvas-lang { display: flex; gap: 8px; padding: 12px 15px; }
-.offcanvas-lang button {
-  flex: 1; padding: 8px; background: #fff; cursor: pointer;
+.offcanvas-lang a {
+  flex: 1; padding: 8px; background: #fff; text-align: center; text-decoration: none;
   border: 1px solid var(--c-line); color: var(--c-muted);
 }
-.offcanvas-lang button[aria-current="true"] { border-color: var(--c-primary); color: var(--c-primary); font-weight: 700; }
+.offcanvas-lang a[aria-current="true"] { border-color: var(--c-primary); color: var(--c-primary); font-weight: 700; }
 
 /* --- Cart & checkout ------------------------------------------------------ */
 .buy-actions { display: flex; flex-wrap: wrap; align-items: stretch; gap: 10px; margin: 6px 0 4px; }
@@ -1366,3 +1366,11 @@ button.cart-icon { background: none; border: 0; padding: 0; margin: 0; font: inh
 .cart-remove .icon { font-size: 22px; }
 .cart-remove:hover { color: var(--c-alert); }
 .cart-remove:focus-visible { outline: 2px solid var(--c-alert); outline-offset: 2px; }
+
+/* --- Language menu links (must out-rank the navy top bar's `.topbar-nav a`) - */
+.topbar-nav .lang-menu a {
+  display: block; width: 100%; padding: 7px 20px;
+  color: var(--c-muted); font-size: 14px; line-height: 22.4px;
+}
+.topbar-nav .lang-menu a:hover { color: var(--c-primary); }
+.topbar-nav .lang-menu a[aria-current="true"] { color: var(--c-primary); font-weight: 700; }
