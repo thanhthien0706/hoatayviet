@@ -5,6 +5,7 @@
   "sku": "CH 016",
   "size": "80L x 10W x 22H (cm) / 60L x 8W x 18H (cm)",
   "price": "Liên hệ",
+  "priceNum": null,
   "category": "Tàu Chở Hàng",
   "categorySlug": "tau-cho-hang",
   "thumb": "assets/img/2022/11/IMG_3196ggg7777-600x498-1-300x300.gif"
@@ -15,6 +16,7 @@
   "sku": "CH 001",
   "size": "80L x 15W x 30H (cm)",
   "price": "Liên hệ",
+  "priceNum": null,
   "category": "Tàu Chở Hàng",
   "categorySlug": "tau-cho-hang",
   "thumb": "assets/img/2022/11/IMG_0214-300x300.jpg"
@@ -25,6 +27,7 @@
   "sku": "NT 003",
   "size": "140L x 50W x 40H (cm)",
   "price": "Liên hệ",
+  "priceNum": null,
   "category": "Nội Thất",
   "categorySlug": "noi-that",
   "thumb": "assets/img/2022/11/BANe-300x300.gif"
@@ -35,6 +38,7 @@
   "sku": "NT 006",
   "size": "300L x 120W (cm)",
   "price": "Liên hệ",
+  "priceNum": null,
   "category": "Nội Thất",
   "categorySlug": "noi-that",
   "thumb": "assets/img/2022/11/2bTHUYENsau-300x300-1-300x300.gif"
@@ -45,6 +49,7 @@
   "sku": "",
   "size": "",
   "price": "Liên hệ",
+  "priceNum": null,
   "category": "Nội Thất",
   "categorySlug": "noi-that",
   "thumb": "assets/img/2023/06/300BHS.gif"
@@ -55,6 +60,7 @@
   "sku": "CH0023",
   "size": "75L x 15W x 22H (CM)",
   "price": "LH",
+  "priceNum": null,
   "category": "Tàu Chở Hàng",
   "categorySlug": "tau-cho-hang",
   "thumb": "assets/img/2023/06/19_n300.gif"
@@ -65,6 +71,7 @@
   "sku": "CN 001",
   "size": "25L (cm)",
   "price": "Liên hệ",
+  "priceNum": null,
   "category": "Sản Phẩm Khác",
   "categorySlug": "san-pham-khac",
   "thumb": "assets/img/2022/11/IMG_0468-300x300-1-300x300.gif"
@@ -75,6 +82,7 @@
   "sku": "BT 003",
   "size": "75L x 11W x 65H (cm)",
   "price": "Liên hệ",
+  "priceNum": null,
   "category": "Thuyền Buồm",
   "categorySlug": "thuyen-buom",
   "thumb": "assets/img/2022/11/100_1885.gif"
@@ -85,6 +93,7 @@
   "sku": "CN005",
   "size": "25L x 9W x 10H (cm)",
   "price": "Liên hệ",
+  "priceNum": null,
   "category": "Sản Phẩm Khác",
   "categorySlug": "san-pham-khac",
   "thumb": "assets/img/2022/11/FFFFFFFFFFFFFFFFFFF-300x207-1.gif"
@@ -95,6 +104,7 @@
   "sku": "DL015",
   "size": "70L x 40W x 100H (cm)",
   "price": "Liên hệ",
+  "priceNum": null,
   "category": "Tàu Du Lịch – Du Thuyền",
   "categorySlug": "tau-du-lich-du-thuyen",
   "thumb": "assets/img/2022/11/44e69f146d8.gif"
@@ -105,6 +115,7 @@
   "sku": "DL 003",
   "size": "70L x 9W x 24H (cm)",
   "price": "Liên hệ",
+  "priceNum": null,
   "category": "Tàu Du Lịch – Du Thuyền",
   "categorySlug": "tau-du-lich-du-thuyen",
   "thumb": "assets/img/2022/11/IMG_0406k.gif"
@@ -115,6 +126,7 @@
   "sku": "DL 001",
   "size": "80L x 12W x 38H (cm)",
   "price": "Liên hệ",
+  "priceNum": null,
   "category": "Tàu Du Lịch – Du Thuyền",
   "categorySlug": "tau-du-lich-du-thuyen",
   "thumb": "assets/img/2022/11/IMG_0305-2.gif"
@@ -125,6 +137,7 @@
   "sku": "DL 00012",
   "size": "80L x 11W x 24H (cm)",
   "price": "LH",
+  "priceNum": null,
   "category": "Tàu Du Lịch – Du Thuyền",
   "categorySlug": "tau-du-lich-du-thuyen",
   "thumb": "assets/img/2023/06/6_n300.gif"
@@ -135,6 +148,7 @@
   "sku": "DL 012",
   "size": "80L x 15W x 22H (cm)",
   "price": "LH",
+  "priceNum": null,
   "category": "Tàu Du Lịch – Du Thuyền",
   "categorySlug": "tau-du-lich-du-thuyen",
   "thumb": "assets/img/2022/11/IMG_3164a.gif"
@@ -145,6 +159,7 @@
   "sku": "DL 002",
   "size": "70L x 12W x 27H (cm)",
   "price": "Liên hệ",
+  "priceNum": null,
   "category": "Tàu Du Lịch – Du Thuyền",
   "categorySlug": "tau-du-lich-du-thuyen",
   "thumb": "assets/img/2022/11/100_2207.gif"
@@ -155,6 +170,7 @@
   "sku": "DL0057",
   "size": "60L x 16W x 27H (cm)",
   "price": "Liên hệ",
+  "priceNum": null,
   "category": "Tàu Du Lịch – Du Thuyền",
   "categorySlug": "tau-du-lich-du-thuyen",
   "thumb": "assets/img/2023/06/46976_n300.gif"
@@ -165,6 +181,7 @@
   "sku": "0071",
   "size": "90L x 12W x 25H (cm)",
   "price": "LH",
+  "priceNum": null,
   "category": "Tàu Du Lịch – Du Thuyền",
   "categorySlug": "tau-du-lich-du-thuyen",
   "thumb": "assets/img/2023/06/78480_n300.gif"
@@ -175,6 +192,7 @@
   "sku": "TB 005",
   "size": "80L x 15W x 75H (cm)",
   "price": "Liên hệ",
+  "priceNum": null,
   "category": "Thuyền Buồm",
   "categorySlug": "thuyen-buom",
   "thumb": "assets/img/2022/11/batavia-maquette-premier.gif"
@@ -185,6 +203,7 @@
   "sku": "TB001",
   "size": "80L x 15W x 75H (cm)",
   "price": "LH",
+  "priceNum": null,
   "category": "Thuyền Buồm",
   "categorySlug": "thuyen-buom",
   "thumb": "assets/img/2023/06/1300.gif"
@@ -195,6 +214,7 @@
   "sku": "BT0012",
   "size": "450L x 120W x 45H (cm)",
   "price": "LH",
+  "priceNum": null,
   "category": "Thuyền (Dùng đi dạo)",
   "categorySlug": "thuyen-dung-di-dao",
   "thumb": "assets/img/2023/06/IMG_300.gif"
@@ -205,6 +225,7 @@
   "sku": "TB 004",
   "size": "150L x 30W x 120H (cm)",
   "price": "15,000,000 (vnd)",
+  "priceNum": 15000000,
   "category": "Thuyền Buồm",
   "categorySlug": "thuyen-buom",
   "thumb": "assets/img/2022/11/IMG_0155.gif"
@@ -215,6 +236,7 @@
   "sku": "TB 001",
   "size": "60L x 12W x 55H (cm)",
   "price": "6,000,000 (vnd)",
+  "priceNum": 6000000,
   "category": "Thuyền Buồm",
   "categorySlug": "thuyen-buom",
   "thumb": "assets/img/2022/11/100_2146t.gif"
@@ -225,6 +247,7 @@
   "sku": "",
   "size": "DÀI 80cm GIÁ: 2,100,000 vnd",
   "price": "Liên hệ",
+  "priceNum": null,
   "category": "Nội Thất",
   "categorySlug": "noi-that",
   "thumb": "assets/img/2023/06/300.gif"
@@ -235,6 +258,7 @@
   "sku": "NT 005",
   "size": "",
   "price": "Liên hệ",
+  "priceNum": null,
   "category": "Nội Thất",
   "categorySlug": "noi-that",
   "thumb": "assets/img/2022/11/BAR1SAU-500x600-1-300x300.gif"
@@ -245,6 +269,7 @@
   "sku": "DT017",
   "size": "60L x 18W x 30H (cm)",
   "price": "Liên hệ",
+  "priceNum": null,
   "category": "Du Thuyền Hiện Đại",
   "categorySlug": "du-thuyen-hien-dai",
   "thumb": "assets/img/2022/11/0088_n-600x600-1.gif"
@@ -255,6 +280,7 @@
   "sku": "TB 009",
   "size": "80L x 16W x 75H (cm)",
   "price": "Liên hệ",
+  "priceNum": null,
   "category": "Tàu Chở Hàng",
   "categorySlug": "tau-cho-hang",
   "thumb": "assets/img/2022/11/z4017f79e9.gif"
@@ -265,6 +291,7 @@
   "sku": "TB 002",
   "size": "55L x 12W 55H (cm)",
   "price": "3,000,000 (vnd)",
+  "priceNum": 3000000,
   "category": "Thuyền Buồm",
   "categorySlug": "thuyen-buom",
   "thumb": "assets/img/2022/11/la-jacinthe.gif"
@@ -275,6 +302,7 @@
   "sku": "CN 002",
   "size": "80L x 60H (cm)",
   "price": "Liên hệ",
+  "priceNum": null,
   "category": "Sản Phẩm Khác",
   "categorySlug": "san-pham-khac",
   "thumb": "assets/img/2022/11/100_1224Sau-300x300.gif"
@@ -285,6 +313,7 @@
   "sku": "CN 002",
   "size": "80L x 60H (cm)",
   "price": "Liên hệ",
+  "priceNum": null,
   "category": "Sản Phẩm Khác",
   "categorySlug": "san-pham-khac",
   "thumb": "assets/img/2022/11/100_1223SAU-300x300.gif"
@@ -295,6 +324,7 @@
   "sku": "NT 002",
   "size": "80W x 200H (cm)",
   "price": "Liên hệ",
+  "priceNum": null,
   "category": "Nội Thất",
   "categorySlug": "noi-that",
   "thumb": "assets/img/2022/11/9fc-200x300.gif"
@@ -305,6 +335,7 @@
   "sku": "TB 008",
   "size": "80L x 17W x 74H (cm)",
   "price": "Liên hệ",
+  "priceNum": null,
   "category": "Thuyền Buồm",
   "categorySlug": "thuyen-buom",
   "thumb": "assets/img/2022/11/IMG_3700.gif"
@@ -315,6 +346,7 @@
   "sku": "TB0011",
   "size": "450L x 120W X 45H 9cm)",
   "price": "LH",
+  "priceNum": null,
   "category": "Thuyền (Dùng đi dạo)",
   "categorySlug": "thuyen-dung-di-dao",
   "thumb": "assets/img/2023/06/IMG_1677300.gif"
