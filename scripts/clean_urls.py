@@ -6,14 +6,18 @@
     sp/foo/index.html     -> /sp/foo
     ../../assets/x.css    -> /assets/x.css
 
-Run after build_site.py / build_en.py. Idempotent. Paired with vercel.json
-(cleanUrls: true), which serves /about from about.html.
+site/ stays local-friendly (relative links, .html) so it opens from disk.
+This script copies it to dist/ and rewrites the links there; Vercel runs it as
+its buildCommand (see vercel.json) and serves dist/ with cleanUrls: true.
 """
 import re
+import shutil
 from pathlib import Path
 from posixpath import normpath, join
 
-SITE = Path(__file__).resolve().parent.parent / 'site'
+ROOT = Path(__file__).resolve().parent.parent
+SITE = ROOT / "site"
+OUT = ROOT / "dist"
 ATTR = re.compile(r'(\b(?:href|src|action|data-img)=")([^"]*)(")')
 SKIP = ('http:', 'https:', '//', '#', 'mailto:', 'tel:', 'data:', 'javascript:')
 JS_CHARS = "'+{<"  # value is a JS string fragment, not a URL
@@ -50,9 +54,12 @@ JS_FIXES = [
 
 
 def main():
+    if OUT.exists():
+        shutil.rmtree(OUT)
+    shutil.copytree(SITE, OUT)
     n = 0
-    for f in SITE.rglob('*.html'):
-        page_dir = str(f.parent.relative_to(SITE)).replace('.', '')
+    for f in OUT.rglob("*.html"):
+        page_dir = str(f.parent.relative_to(OUT)).replace('.', '')
         src = f.read_text(encoding='utf-8')
         out = ATTR.sub(lambda m: m.group(1) + clean(m.group(2), page_dir) + m.group(3), src)
         for a, b in JS_FIXES:
@@ -60,6 +67,13 @@ def main():
         if out != src:
             f.write_text(out, encoding='utf-8')
             n += 1
+    # cart.js builds product links at runtime: make them clean + root-absolute
+    js = OUT / 'assets' / 'js' / 'cart.js'
+    s = js.read_text(encoding='utf-8')
+    s = (s.replace("product: 'product/'", "product: '/product/'")
+          .replace("product: 'sp/'", "product: '/sp/'")
+          .replace(" + '/index.html';", ";"))
+    js.write_text(s, encoding='utf-8')
     print('rewrote', n, 'files')
 
 

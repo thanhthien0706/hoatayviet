@@ -11,3 +11,4 @@ _raw/*
 
 .DS_Store
 Thumbs.db
+dist/

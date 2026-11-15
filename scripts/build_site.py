@@ -137,8 +137,8 @@ def header(prefix, active_href=None):
           <li class="lang-switch">
             <button class="lang-toggle" type="button" aria-expanded="false" aria-haspopup="true" aria-controls="lang-menu">Languages {down}</button>
             <ul class="lang-menu" id="lang-menu">
-              <li><a href="@@LANG:vi@@" hreflang="vi" lang="vi" data-lang="vi">Tiếng Việt</a></li>
-              <li><a href="@@LANG:en@@" hreflang="en" lang="en" data-lang="en">English</a></li>
+              <li><a href="@@LANG:vi@@" hreflang="vi" lang="vi" data-lang="vi"><img class="flag" src="{prefix}assets/img/flags/vn.svg" alt="" width="22" height="15"> Tiếng Việt</a></li>
+              <li><a href="@@LANG:en@@" hreflang="en" lang="en" data-lang="en"><img class="flag" src="{prefix}assets/img/flags/gb.svg" alt="" width="22" height="15"> English</a></li>
             </ul>
           </li>
         </ul>
@@ -230,8 +230,8 @@ def offcanvas(prefix):
         '<button class="toggle-sub" type="button" aria-expanded="false" aria-label="Mở mục con">%s</button>'
         '</a><ul class="sub">%s</ul></li>' % (prefix, icon('down'), gsub))
     items.append('<li><a href="%stai-khoan.html">Đăng nhập</a></li>' % prefix)
-    items.append('<li class="offcanvas-lang"><a href="@@LANG:vi@@" hreflang="vi" lang="vi" data-lang="vi">Tiếng Việt</a>'
-                 '<a href="@@LANG:en@@" hreflang="en" lang="en" data-lang="en">English</a></li>')
+    items.append('<li class="offcanvas-lang"><a href="@@LANG:vi@@" hreflang="vi" lang="vi" data-lang="vi"><img class="flag" src="' + prefix + 'assets/img/flags/vn.svg" alt="" width="22" height="15"> Tiếng Việt</a>'
+                 '<a href="@@LANG:en@@" hreflang="en" lang="en" data-lang="en"><img class="flag" src="' + prefix + 'assets/img/flags/gb.svg" alt="" width="22" height="15"> English</a></li>')
 
     return '''<div class="offcanvas-backdrop" hidden-aria></div>
 <aside class="offcanvas" id="mobile-menu" aria-hidden="true" aria-label="Menu">
@@ -284,21 +284,7 @@ def footer(prefix):
     </div>
   </div>
 
-  <div class="footer-bottom">
-    <div class="container">Copyright 2026 © <strong>duongit</strong></div>
-  </div>
-
   <a class="back-to-top" href="#top" aria-label="Lên đầu trang">{up}</a>
-
-  <div class="quick-call">
-    <div class="quick-call-inner">
-      <p class="quick-call-text">HotLine: {phone}</p>
-      <span class="ph-circle" aria-hidden="true"></span>
-      <span class="ph-circle-fill" aria-hidden="true"></span>
-      <span class="ph-img-circle" aria-hidden="true">{phone_icon}</span>
-      <a href="tel:0908062685" aria-label="Gọi ngay {phone}"></a>
-    </div>
-  </div>
 </footer>'''.format(pin=icon('pin'), phone_icon=icon('phone'), mail=icon('mail'),
                     up=icon('up'), phone=PHONE)
 
@@ -653,6 +639,191 @@ def build_search():
     return page('Tìm kiếm - Hoa Tay Việt', 'is-search', content, '', active='san-pham.html')
 
 
+def build_about_body():
+    cats = ''.join('<li><a href="danh-muc/%s/index.html">%s</a></li>' % (s, e(n))
+                   for s, n in CATEGORIES)
+    return '''<div class="about">
+  <section class="about-lead">
+    <p class="about-kicker">Xưởng sản xuất thuyền mỹ nghệ</p>
+    <p class="about-big">Mỗi con thuyền là một tác phẩm làm bằng tay.</p>
+    <p>Hoa Tay Việt là xưởng sản xuất thuyền mỹ nghệ, chuyên xuất khẩu ngành hàng thủ công mỹ nghệ
+với bề dày kinh nghiệm trong ngành thủ công làm bằng tay.</p>
+    <p>Sản phẩm gồm mô hình tàu du lịch, du thuyền, tàu chở hàng, thuyền buồm, thuyền dùng đi dạo và nội thất gỗ.</p>
+  </section>
+
+  <section class="about-section">
+    <h2>Chúng tôi làm gì</h2>
+    <div class="is-divider" style="margin-left:0"></div>
+    <div class="about-grid">
+      <div class="about-card">
+        <h3>Chế tác thủ công</h3>
+        <p>Từng chi tiết của mô hình được làm bằng tay, từ thân tàu, boong, cột buồm đến các phụ kiện nhỏ nhất.</p>
+      </div>
+      <div class="about-card">
+        <h3>Đa dạng mẫu mã</h3>
+        <p>Từ tàu du lịch, du thuyền, tàu chở hàng đến thuyền buồm cổ điển, phù hợp để trưng bày, trang trí hay làm quà tặng.</p>
+      </div>
+      <div class="about-card">
+        <h3>Xuất khẩu quốc tế</h3>
+        <p>Chúng tôi chuyên xuất khẩu hàng thủ công mỹ nghệ, đóng gói cẩn thận để sản phẩm đến tay khách nguyên vẹn.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="about-section">
+    <h2>Danh mục sản phẩm</h2>
+    <div class="is-divider" style="margin-left:0"></div>
+    <p>Khám phá các dòng sản phẩm của Hoa Tay Việt:</p>
+    <ul class="about-cats">%s</ul>
+    <p><a class="btn-cart" href="san-pham.html">Xem tất cả sản phẩm</a></p>
+  </section>
+
+  <section class="about-section about-contact">
+    <h2>Liên hệ với chúng tôi</h2>
+    <div class="is-divider" style="margin-left:0"></div>
+    <p>Chào mừng quý khách đến với đại gia đình HOA TAY VIỆT. Hãy liên hệ để được tư vấn và báo giá.</p>
+    <p><strong>CÔNG TY TNHH HOA TAY VIỆT</strong></p>
+    <p>Địa chỉ: 199 ấp 1B, Phước Thái, Long Thành, Đồng Nai</p>
+    <p>Điện thoại: <a href="tel:0908062685">0908 062 685</a></p>
+    <p>Email: <a href="mailto:hoatayviet.modelship@gmail.com">hoatayviet.modelship@gmail.com</a></p>
+    <p><a class="btn-cart" href="lien-he.html">Trang liên hệ</a></p>
+  </section>
+</div>''' % cats
+
+
+def build_news_body():
+    def thumb(cat):
+        for q in PRODUCTS:
+            if q['categorySlug'] == cat and q['thumb']:
+                return img_path(q['thumb'])
+        return IMG_BASE + 'placeholder.png'
+    posts = [
+        ('Kiến thức', 'tau-du-lich-du-thuyen', 'Mô hình tàu du lịch, du thuyền: chọn sao cho phù hợp?',
+         'Gợi ý cách chọn kích thước và mẫu mã mô hình tàu du lịch, du thuyền để trưng bày trong phòng khách, văn phòng hay làm quà tặng.',
+         'danh-muc/tau-du-lich-du-thuyen/index.html'),
+        ('Sản phẩm', 'thuyen-buom', 'Thuyền buồm thủ công — nét cổ điển cho không gian của bạn',
+         'Thuyền buồm làm bằng tay với từng chi tiết cột buồm, dây và thân thuyền được chế tác tỉ mỉ.',
+         'danh-muc/thuyen-buom/index.html'),
+        ('Sản phẩm', 'tau-cho-hang', 'Tàu chở hàng mô hình — chi tiết như thật',
+         'Các mẫu tàu chở hàng mô hình tái hiện cấu trúc tàu thật, phù hợp cho người yêu thích hàng hải và sưu tầm.',
+         'danh-muc/tau-cho-hang/index.html'),
+        ('Sản phẩm', 'noi-that', 'Nội thất gỗ thủ công cho ngôi nhà của bạn',
+         'Bên cạnh mô hình thuyền, Hoa Tay Việt còn có các sản phẩm nội thất gỗ làm bằng tay.',
+         'danh-muc/noi-that/index.html'),
+        ('Hướng dẫn', 'du-thuyen-hien-dai', 'Hướng dẫn mua hàng tại Hoa Tay Việt',
+         'Các bước chọn sản phẩm, thêm vào giỏ hàng và thanh toán đơn giản, nhanh chóng.',
+         'huong-dan-mua-hang.html'),
+        ('Hướng dẫn', 'thuyen-dung-di-dao', 'Hướng dẫn sử dụng và bảo quản mô hình',
+         'Một vài lưu ý nhỏ giúp mô hình thuyền luôn bền đẹp theo thời gian.',
+         'huong-dan-su-dung.html'),
+    ]
+    cards = ''.join('''<article class="news-card">
+      <a class="news-media" href="%s"><img src="%s" alt="%s" loading="lazy"></a>
+      <div class="news-body">
+        <span class="news-tag">%s</span>
+        <h3><a href="%s">%s</a></h3>
+        <p>%s</p>
+        <a class="news-more" href="%s">Xem thêm</a>
+      </div>
+    </article>''' % (href, thumb(cat), e(title), tag, href, e(title), e(desc), href)
+        for tag, cat, title, desc, href in posts)
+    return '''<div class="news">
+  <p class="news-intro">Cập nhật các sản phẩm, kiến thức và hướng dẫn hữu ích từ xưởng Hoa Tay Việt.</p>
+  <div class="news-grid">%s</div>
+  <p class="news-cta">Cần tư vấn thêm? Gọi <a href="tel:0908062685">0908 062 685</a> hoặc <a href="lien-he.html">liên hệ với chúng tôi</a>.</p>
+</div>''' % cards
+
+
+MAP_SRC = 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3920.626500441101!2d107.03891671474814!3d10.686071692382871!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31751a77768c1d45%3A0xcb63f98a4ce9af9a!2zSzYwIOG6pHAgMSwgVMOibiBIaeG7h3AsIExvbmcgVGjDoG5oLCDEkOG7k25nIE5haSwgVmnhu4d0IE5hbQ!5e0!3m2!1svi!2sus!4v1669172546397!5m2!1svi!2sus'
+
+
+def steps_html(steps):
+    return '<ol class="steps">%s</ol>' % ''.join(
+        '<li><span class="step-no">%d</span><div><h3>%s</h3><p>%s</p></div></li>' % (i, e(h), e(d))
+        for i, (h, d) in enumerate(steps, 1))
+
+
+def build_contact_body():
+    return '''<div class="contact">
+  <p class="news-intro">Hãy liên hệ để được tư vấn mẫu mã, kích thước và nhận báo giá cho mô hình thuyền bạn quan tâm.</p>
+  <div class="contact-grid">
+    <div class="contact-card">
+      <h3>Địa chỉ xưởng</h3>
+      <p>199 ấp 1B, Phước Thái, Long Thành, Đồng Nai</p>
+    </div>
+    <div class="contact-card">
+      <h3>Điện thoại</h3>
+      <p><a href="tel:0908062685">0908 062 685</a></p>
+      <p>84 35234 4343 (Ms Tram)</p>
+    </div>
+    <div class="contact-card">
+      <h3>Email</h3>
+      <p><a href="mailto:hoatayviet.modelship@gmail.com">hoatayviet.modelship@gmail.com</a></p>
+      <p><a href="mailto:lywoodenmodelboat@gmail.com">lywoodenmodelboat@gmail.com</a></p>
+    </div>
+  </div>
+  <section class="about-section">
+    <h2>Bạn cần chuẩn bị gì khi liên hệ?</h2>
+    <div class="is-divider" style="margin-left:0"></div>
+    <ul class="check-list">
+      <li>Tên hoặc mã sản phẩm bạn quan tâm (ví dụ CH 001).</li>
+      <li>Số lượng và kích thước mong muốn.</li>
+      <li>Địa chỉ nhận hàng để chúng tôi tư vấn cách vận chuyển.</li>
+    </ul>
+    <p><a class="btn-cart" href="tel:0908062685">Gọi ngay</a>
+       <a class="btn-cart btn-alt" href="mailto:hoatayviet.modelship@gmail.com">Gửi email</a></p>
+  </section>
+  <section class="about-section">
+    <h2>Bản đồ</h2>
+    <div class="is-divider" style="margin-left:0"></div>
+    <iframe class="footer-map contact-map" title="Bản đồ Hoa Tay Việt" loading="lazy"
+      referrerpolicy="no-referrer-when-downgrade" allowfullscreen
+      src="%s"></iframe>
+  </section>
+</div>''' % MAP_SRC
+
+
+def build_buying_body():
+    steps = steps_html([
+        ('Chọn sản phẩm', 'Xem sản phẩm theo danh mục hoặc dùng ô tìm kiếm theo tên, mã sản phẩm. Mở trang sản phẩm để xem ảnh và kích thước.'),
+        ('Thêm vào giỏ hàng', 'Nhấn nút thêm vào giỏ hàng ở trang sản phẩm hoặc dấu + trên thẻ sản phẩm. Số lượng hiển thị ngay trên biểu tượng giỏ hàng.'),
+        ('Kiểm tra giỏ hàng', 'Mở giỏ hàng để tăng giảm số lượng hoặc xóa sản phẩm. Sản phẩm có giá “Liên hệ” chưa được tính vào tổng, chúng tôi sẽ báo giá khi xác nhận đơn.'),
+        ('Điền thông tin giao hàng', 'Nhập họ tên, số điện thoại, địa chỉ nhận hàng và email (không bắt buộc) ở trang thanh toán.'),
+        ('Chọn cách thanh toán', 'Thanh toán khi nhận hàng (COD) hoặc quét mã QR bằng ứng dụng ngân hàng, ví điện tử.'),
+        ('Xác nhận đơn hàng', 'Chúng tôi liên hệ qua điện thoại để xác nhận đơn, báo giá với sản phẩm giá “Liên hệ” và sắp xếp giao hàng.'),
+    ])
+    return '''<div class="guide">
+  <p class="news-intro">Mua hàng tại Hoa Tay Việt chỉ với vài bước đơn giản.</p>
+  %s
+  <section class="about-section">
+    <h2>Phương thức thanh toán</h2>
+    <div class="is-divider" style="margin-left:0"></div>
+    <div class="about-grid two">
+      <div class="about-card"><h3>Thanh toán khi nhận hàng (COD)</h3><p>Trả tiền mặt cho nhân viên giao hàng khi nhận sản phẩm.</p></div>
+      <div class="about-card"><h3>Thanh toán bằng mã QR</h3><p>Quét mã bằng ứng dụng ngân hàng hoặc ví điện tử.</p></div>
+    </div>
+  </section>
+  <p class="news-cta">Cần hỗ trợ khi đặt hàng? Gọi <a href="tel:0908062685">0908 062 685</a> hoặc <a href="lien-he.html">liên hệ với chúng tôi</a>.</p>
+  <p><a class="btn-cart" href="san-pham.html">Bắt đầu mua sắm</a></p>
+</div>''' % steps
+
+
+def build_usage_body():
+    tips = [
+        ('Đặt nơi khô ráo', 'Đặt mô hình ở nơi khô thoáng, tránh ẩm thấp và nước để gỗ không bị cong vênh hay mốc.'),
+        ('Tránh nắng gắt', 'Ánh nắng trực tiếp lâu ngày có thể làm phai màu sơn và khô gỗ, nên đặt xa cửa sổ hướng nắng.'),
+        ('Vệ sinh nhẹ nhàng', 'Dùng chổi lông mềm hoặc khăn khô để phủi bụi. Tránh dùng nước hay hóa chất tẩy rửa.'),
+        ('Cầm đúng cách', 'Nâng mô hình từ phần thân, không cầm vào cột buồm, dây hay các chi tiết nhỏ để tránh gãy, bung.'),
+        ('Bảo quản khi vận chuyển', 'Giữ lại hộp đóng gói ban đầu và chèn lót kỹ khi di chuyển để bảo vệ các chi tiết.'),
+    ]
+    cards = ''.join('<div class="about-card"><h3>%s</h3><p>%s</p></div>' % (e(h), e(d)) for h, d in tips)
+    return '''<div class="guide">
+  <p class="news-intro">Mô hình thuyền của Hoa Tay Việt được làm thủ công từng chi tiết. Vài lưu ý nhỏ dưới đây giúp sản phẩm luôn bền đẹp.</p>
+  <div class="about-grid">%s</div>
+  <p class="news-cta">Có thắc mắc về sản phẩm? Gọi <a href="tel:0908062685">0908 062 685</a> hoặc <a href="lien-he.html">liên hệ với chúng tôi</a>.</p>
+</div>''' % cards
+
+
 def build_stub(title, heading, body, filename, active=None):
     content = '''<div class="page-wrap"><div class="container">
   <nav class="breadcrumb"><a href="index.html">Trang chủ</a><span>/</span>{h}</nav>
@@ -802,18 +973,16 @@ def main():
 <p>Địa chỉ: 199 ấp 1B, Phước Thái, Long Thành, Đồng Nai</p>
 <p>Điện thoại: <a href="tel:0908062685">0908 062 685</a> — 84 35234 4343 (Ms Tram)</p>
 <p>Email: <a href="mailto:hoatayviet.modelship@gmail.com">hoatayviet.modelship@gmail.com</a></p>'''
-    intro = '''<p>Hoa Tay Việt là xưởng sản xuất thuyền mỹ nghệ, chuyên xuất khẩu ngành hàng thủ công mỹ nghệ
-với bề dày kinh nghiệm trong ngành thủ công làm bằng tay.</p>
-<p>Sản phẩm gồm mô hình tàu du lịch, du thuyền, tàu chở hàng, thuyền buồm, thuyền dùng đi dạo và nội thất gỗ.</p>'''
+    intro = build_about_body()
     todo = '<p>Nội dung trang này chưa được thu thập (máy chủ gốc đang trả về lỗi 500).</p>'
 
     for title, heading, body, fn in [
         ('Giới thiệu - Hoa Tay Việt',        'Giới thiệu',          intro,   'gioi-thieu.html'),
-        ('Liên hệ - Hoa Tay Việt',           'Liên hê',             contact, 'lien-he.html'),
-        ('Tin tức - Hoa Tay Việt',           'Tin tức',             todo,    'tin-tuc.html'),
+        ('Liên hệ - Hoa Tay Việt',           'Liên hê',             build_contact_body(), 'lien-he.html'),
+        ('Tin tức - Hoa Tay Việt',           'Tin tức',             build_news_body(),    'tin-tuc.html'),
         ('Hướng dẫn - Hoa Tay Việt',         'Hướng dẫn',           todo,    'huong-dan.html'),
-        ('Hướng dẫn sử dụng - Hoa Tay Việt', 'Hướng Dẫn Sử Dụng',   todo,    'huong-dan-su-dung.html'),
-        ('Hướng dẫn mua hàng - Hoa Tay Việt','Hướng dẫn mua hàng',  todo,    'huong-dan-mua-hang.html'),
+        ('Hướng dẫn sử dụng - Hoa Tay Việt', 'Hướng Dẫn Sử Dụng',   build_usage_body(),    'huong-dan-su-dung.html'),
+        ('Hướng dẫn mua hàng - Hoa Tay Việt','Hướng dẫn mua hàng',  build_buying_body(),    'huong-dan-mua-hang.html'),
         ('Tài khoản - Hoa Tay Việt',         'Đăng nhập',           todo,    'tai-khoan.html'),
     ]:
         write(fn, build_stub(title, heading, body, fn)); n += 1

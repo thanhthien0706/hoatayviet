@@ -1,5 +1,6 @@
 {
-  "outputDirectory": "site",
+  "buildCommand": "python3 scripts/clean_urls.py",
+  "outputDirectory": "dist",
   "cleanUrls": true,
   "trailingSlash": false
 }
