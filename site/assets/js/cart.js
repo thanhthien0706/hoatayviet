@@ -118,9 +118,6 @@
         var nm = el('a', 'cart-name', i.name); nm.href = a.href;
         info.appendChild(nm);
         info.appendChild(el('div', 'cart-unit', priceLabel(i)));
-        var rm = el('button', 'cart-remove', 'Xóa'); rm.type = 'button';
-        rm.addEventListener('click', function () { cart.splice(idx, 1); save(); render(); });
-        info.appendChild(rm);
         row.appendChild(info);
 
         var q = el('div', 'qty-box');
@@ -136,7 +133,13 @@
         q.appendChild(minus); q.appendChild(inp); q.appendChild(plus);
         row.appendChild(q);
 
-        row.appendChild(el('div', 'cart-line', typeof i.price === 'number' ? fmt(i.price * i.qty) : '—'));
+        var rm = el('button', 'cart-remove'); rm.type = 'button';
+        rm.setAttribute('aria-label', 'Xóa ' + i.name + ' khỏi giỏ hàng');
+        rm.title = 'Xóa';
+        rm.innerHTML = '<svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">' +
+          '<path d="M6 19a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg>';
+        rm.addEventListener('click', function () { cart.splice(idx, 1); save(); render(); });
+        row.appendChild(rm);
         list.appendChild(row);
       });
       var t = totals();

@@ -157,6 +157,7 @@
     [/^(\d+) sản phẩm$/, '$1 products'],
     [/^Xem tất cả \((\d+)\)$/, 'View all ($1)'],
     [/^Xem (.+)$/, 'View $1'],
+    [/^Xóa (.+) khỏi giỏ hàng$/, 'Remove $1 from cart'],
     [/^Thêm (.+) vào giỏ hàng$/, 'Add $1 to cart'],
     [/^Kết quả cho “(.*)”$/, 'Results for “$1”'],
     [/^Ảnh (\d+)$/, 'Image $1'],

@@ -1100,17 +1100,15 @@ body.no-scroll { overflow: hidden; }
 
 .cart-layout { display: grid; grid-template-columns: minmax(0, 1fr) 340px; gap: 30px; align-items: start; margin: 10px 0 40px; }
 @media (max-width: 849px) { .cart-layout { grid-template-columns: 1fr; } }
-.cart-row { display: grid; grid-template-columns: 80px minmax(0, 1fr) auto 110px; gap: 14px; align-items: center; padding: 14px 0; border-bottom: 1px solid var(--c-line); }
+.cart-row { display: grid; grid-template-columns: 80px minmax(0, 1fr) auto auto; gap: 14px; align-items: center; padding: 14px 0; border-bottom: 1px solid var(--c-line); }
 .cart-thumb img { width: 80px; height: 80px; object-fit: cover; border-radius: 3px; background: #f3f3f3; }
 .cart-name { font-weight: 700; color: var(--c-heading); }
 .cart-unit { font-size: 14px; color: var(--c-muted); margin: 3px 0; }
-.cart-remove { background: none; border: 0; padding: 0; font-size: 13px; color: var(--c-alert); cursor: pointer; text-decoration: underline; }
-.cart-line { text-align: right; font-weight: 700; }
 @media (max-width: 549px) {
   .cart-row { grid-template-columns: 64px minmax(0, 1fr); }
   .cart-thumb img { width: 64px; height: 64px; }
   .cart-row .qty-box { grid-column: 2; justify-self: start; }
-  .cart-line { grid-column: 2; text-align: left; }
+  .cart-row .cart-remove { grid-column: 2; justify-self: start; }
 }
 
 .cart-summary { padding: 20px; border: 1px solid var(--c-line-soft); border-radius: 3px; background: #fafafa; }
@@ -1357,3 +1355,14 @@ button.cart-icon { background: none; border: 0; padding: 0; margin: 0; font: inh
   .qr-panel { grid-template-columns: 1fr; justify-items: center; }
   .qr-details { width: 100%; }
 }
+
+/* remove control: bare trash icon, no frame or padding */
+.cart-remove {
+  display: inline-flex; align-items: center; justify-content: center;
+  padding: 0; background: none; border: 0; cursor: pointer;
+  color: var(--c-muted);
+  transition: color var(--t-fast);
+}
+.cart-remove .icon { font-size: 22px; }
+.cart-remove:hover { color: var(--c-alert); }
+.cart-remove:focus-visible { outline: 2px solid var(--c-alert); outline-offset: 2px; }
