@@ -27,7 +27,7 @@ MAIN_NAV = [
     ('gioi-thieu',             'Giới thiệu', 'gioi-thieu.html',  False),
     ('shop',                   'Sản phẩm',   'san-pham.html',    False),
     ('tin-tuc',                'Tin tức',    'tin-tuc.html',     False),
-    ('lien-he',                'Liên hê',    'lien-he.html',     False),
+    ('lien-he',                'Liên hệ',    'lien-he.html',     False),
     ('huong-dan',              'Hướng dẫn',  'huong-dan.html',   True),
 ]
 GUIDE_SUB = [
@@ -223,7 +223,7 @@ def offcanvas(prefix):
         '<button class="toggle-sub" type="button" aria-expanded="false" aria-label="Mở danh mục">%s</button>'
         '</a><ul class="sub">%s</ul></li>' % (prefix, icon('down'), sub))
     items.append('<li><a href="%stin-tuc.html">Tin tức</a></li>' % prefix)
-    items.append('<li><a href="%slien-he.html">Liên hê</a></li>' % prefix)
+    items.append('<li><a href="%slien-he.html">Liên hệ</a></li>' % prefix)
     gsub = ''.join('<li><a href="%s%s">%s</a></li>' % (prefix, h, e(t)) for t, h in GUIDE_SUB)
     items.append(
         '<li><a href="%shuong-dan.html">Hướng dẫn'
@@ -978,7 +978,7 @@ def main():
 
     for title, heading, body, fn in [
         ('Giới thiệu - Hoa Tay Việt',        'Giới thiệu',          intro,   'gioi-thieu.html'),
-        ('Liên hệ - Hoa Tay Việt',           'Liên hê',             build_contact_body(), 'lien-he.html'),
+        ('Liên hệ - Hoa Tay Việt',           'Liên hệ',             build_contact_body(), 'lien-he.html'),
         ('Tin tức - Hoa Tay Việt',           'Tin tức',             build_news_body(),    'tin-tuc.html'),
         ('Hướng dẫn - Hoa Tay Việt',         'Hướng dẫn',           todo,    'huong-dan.html'),
         ('Hướng dẫn sử dụng - Hoa Tay Việt', 'Hướng Dẫn Sử Dụng',   build_usage_body(),    'huong-dan-su-dung.html'),
