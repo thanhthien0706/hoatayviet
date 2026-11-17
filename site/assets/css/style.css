@@ -213,8 +213,8 @@ button { cursor: pointer; }
 
 .logo { width: 200px; flex: none; }
 .logo a { display: block; color: var(--c-primary); }
-.logo img { max-height: var(--h-main); width: auto; }
-
+.logo img { max-height: var(--h-main); width: auto;     transform: rotate(-2deg); }
+@media (max-width: 549px) { .logo { width: unset; } }
 
 .header-search { flex: 1; padding-left: 30px; }
 .searchform {
