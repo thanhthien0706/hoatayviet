@@ -322,5 +322,88 @@
         main.alt = btn.getAttribute('data-alt') || '';
       });
     });
+
+    /* Zoom button + lightbox popup (prev / next through all gallery images) */
+    var wrap = main.parentNode;
+    var list = [];
+    each(thumbs, function (b) { list.push({ src: b.getAttribute('data-full'), alt: b.getAttribute('data-alt') || '' }); });
+    var cur = 0, lb = null, lbImg, lbCount, lbThumbs, lastFocus;
+
+    function selectedIndex() {
+      for (var i = 0; i < thumbs.length; i++) if (thumbs[i].getAttribute('aria-selected') === 'true') return i;
+      return 0;
+    }
+    function show(i) {
+      cur = (i + list.length) % list.length;
+      lbImg.src = list[cur].src;
+      lbImg.alt = list[cur].alt;
+      lbCount.textContent = (cur + 1) + ' / ' + list.length;
+      each(lbThumbs, function (t, k) { t.setAttribute('aria-selected', k === cur ? 'true' : 'false'); });
+      if (lbThumbs[cur].scrollIntoView) lbThumbs[cur].scrollIntoView({ block: 'nearest', inline: 'center' });
+      thumbs[cur].click();               /* keep page gallery in sync */
+    }
+    function close() {
+      lb.classList.remove('is-open');
+      document.body.classList.remove('lb-open');
+      document.removeEventListener('keydown', onKey);
+      if (lastFocus) lastFocus.focus();
+    }
+    function onKey(e) {
+      if (e.key === 'Escape') close();
+      else if (e.key === 'ArrowLeft') show(cur - 1);
+      else if (e.key === 'ArrowRight') show(cur + 1);
+    }
+    function build() {
+      lb = document.createElement('div');
+      lb.className = 'lightbox';
+      lb.setAttribute('role', 'dialog');
+      lb.setAttribute('aria-modal', 'true');
+      lb.setAttribute('aria-label', 'Ảnh sản phẩm');
+      lb.innerHTML =
+        '<button type="button" class="lb-close" aria-label="Đóng">&times;</button>' +
+        '<button type="button" class="lb-nav lb-prev" aria-label="Ảnh trước">&#10094;</button>' +
+        '<figure class="lb-figure"><div class="lb-stage"><img alt=""></div><figcaption class="lb-count"></figcaption><div class="lb-thumbs"></div></figure>' +
+        '<button type="button" class="lb-nav lb-next" aria-label="Ảnh sau">&#10095;</button>';
+      document.body.appendChild(lb);
+      lbImg = lb.querySelector('img');
+      lbCount = lb.querySelector('.lb-count');
+      var strip = lb.querySelector('.lb-thumbs');
+      each(list, function (it, i) {
+        var t = document.createElement('button');
+        t.type = 'button';
+        t.setAttribute('aria-label', 'Ảnh ' + (i + 1));
+        t.innerHTML = '<img src="' + it.src + '" alt="">';
+        t.addEventListener('click', function () { show(i); });
+        strip.appendChild(t);
+      });
+      lbThumbs = strip.children;
+      strip.hidden = list.length < 2;
+      lb.querySelector('.lb-close').addEventListener('click', close);
+      lb.querySelector('.lb-prev').addEventListener('click', function () { show(cur - 1); });
+      lb.querySelector('.lb-next').addEventListener('click', function () { show(cur + 1); });
+      lb.addEventListener('click', function (e) { if (e.target === lb || e.target.className === 'lb-figure' || e.target.className === 'lb-stage') close(); });
+      var multi = list.length > 1;
+      lb.querySelector('.lb-prev').hidden = !multi;
+      lb.querySelector('.lb-next').hidden = !multi;
+    }
+    function open() {
+      if (!lb) build();
+      lastFocus = document.activeElement;
+      show(selectedIndex());
+      lb.classList.add('is-open');
+      document.body.classList.add('lb-open');
+      document.addEventListener('keydown', onKey);
+      lb.querySelector('.lb-close').focus();
+    }
+
+    var zoom = document.createElement('button');
+    zoom.type = 'button';
+    zoom.className = 'gallery-zoom';
+    zoom.setAttribute('aria-label', 'Phóng to ảnh');
+    zoom.innerHTML = '<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="square" stroke-linejoin="miter" aria-hidden="true"><path d="M14 4h6v6M20 4l-7 7M10 20H4v-6M4 20l7-7"/></svg>';
+    zoom.addEventListener('click', open);
+    wrap.appendChild(zoom);
+    main.style.cursor = 'zoom-in';
+    main.addEventListener('click', open);
   })();
 })();
